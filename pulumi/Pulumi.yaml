@@ -1,0 +1,11 @@
+name: IaCPulumi
+description: Creacion de MV dentro de la MV Desarrollo con Pulumi
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
