@@ -2,7 +2,6 @@ import os.path
 
 from aws_cdk import Stack
 from aws_cdk import aws_ec2 as ec2
-from aws_cdk import aws_iam as iam
 from constructs import Construct
 
 dirname = os.path.dirname(__file__)
@@ -13,16 +12,7 @@ class EC2InstanceStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        vpc = ec2.Vpc(
-            self,
-            "VPC",
-            nat_gateways=0,
-            subnet_configuration=[
-                ec2.SubnetConfiguration(
-                    name="public", subnet_type=ec2.SubnetType.PUBLIC
-                )
-            ],
-        )
+        vpc = ec2.Vpc.from_lookup(self, "ImportedVPC", is_default=True)
 
         cloud9_image = ec2.MachineImage.generic_linux(
             {self.region: "ami-022ce79dc9cabea0c"}
